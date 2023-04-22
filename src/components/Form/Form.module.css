@@ -1,0 +1,27 @@
+.form {
+  padding-top: 50px;
+  display: grid;
+  grid-template-columns: repeat(2, 200px);
+  text-align: left;
+  gap: 10px;
+}
+
+.form__input_wrapper {
+  display: flex;
+  /* justify-content: space-between; */
+  text-align: start;
+}
+
+/* .form__input {
+  max-width: 100px;
+} */
+
+.form__input_label {
+  flex-grow: 1;
+  /* width: 300px; */
+}
+
+.form__btn_submit {
+  align-self: start;
+  padding: 10px;
+}

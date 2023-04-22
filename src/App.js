@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Form from "./components/Form/Form";
+import PricePerHour from "./components/PricePerHour/PricePerHour"
+import "./styles/App.css";
+import { getCountWorkDays, calculatePricePerHour } from "./api/api";
 
 function App() {
+  const [pricePerHour, setPricePerHour] = useState(null);
+
+  async function handleFormSubmit(salary, countWorkHours, year, month) {
+    const countWorkDays = await getCountWorkDays(year, month)
+    const price = calculatePricePerHour(salary, countWorkHours, countWorkDays)
+    setPricePerHour(price)
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>Расчёт стоимости часа сотрудника</h1>
       </header>
+      <Form onFormSubmitted={handleFormSubmit} />
+      <PricePerHour price={pricePerHour} />
     </div>
   );
 }
