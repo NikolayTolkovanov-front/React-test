@@ -6,9 +6,17 @@ import { getCountWorkDays, calculatePricePerHour } from "./api/api";
 
 function App() {
   const [pricePerHour, setPricePerHour] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   async function handleFormSubmit(salary, countWorkHours, year, month) {
     const countWorkDays = await getCountWorkDays(year, month)
+
+    if (countWorkDays <= 1  || countWorkDays === 0) {
+      setErrorMessage("Ошибка ответа");
+      return
+    }
+
+    setErrorMessage("");
     const price = calculatePricePerHour(salary, countWorkHours, countWorkDays)
     setPricePerHour(price)
   }
@@ -20,6 +28,7 @@ function App() {
       </header>
       <Form onFormSubmitted={handleFormSubmit} />
       <PricePerHour price={pricePerHour} />
+      <p>{errorMessage}</p>
     </div>
   );
 }
